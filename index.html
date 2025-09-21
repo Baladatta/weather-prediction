@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="weather-app">
+    <h1>🌤️ Weather App</h1>
+
+    <div class="search-box">
+      <input type="text" id="cityInput" placeholder="Enter city name">
+      <button onclick="getWeather()">Get Weather</button>
+    </div>
+
+    <h2 id="cityName"></h2>
+    <p id="temperature"></p>
+    <p id="condition"></p>
+    <p id="humidity"></p>
+    <p id="wind"></p>
+  </div>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById("cityInput").value;
+      const response = await fetch(`/weather?city=${city}`);
+      const data = await response.json();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      document.getElementById("cityName").innerText = `${data.city}, ${data.country}`;
+      document.getElementById("temperature").innerText = `🌡️ Temp: ${data.temp}°C (Feels like ${data.feels_like}°C)`;
+      document.getElementById("condition").innerText = `☁️ Condition: ${data.description}`;
+      document.getElementById("humidity").innerText = `💧 Humidity: ${data.humidity}%`;
+      document.getElementById("wind").innerText = `💨 Wind: ${data.wind_speed} m/s`;
+
+      document.getElementById("weatherResult").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
