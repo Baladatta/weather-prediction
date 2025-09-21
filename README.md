@@ -1,1 +1,1 @@
-# weather-prediction
+# weather-prediction using weather API
